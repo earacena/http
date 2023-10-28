@@ -20,6 +20,7 @@
 
 #define PORT "9999"
 #define BUFFER_SIZE 256
+#define HTML_FILES_ROOT_FOLDER "./pages"
 
 void *get_in_addr(struct sockaddr *sa) {
   if (sa->sa_family == AF_INET) {
@@ -80,6 +81,8 @@ int bind_available_address(struct addrinfo *ai, int &listener) {
   if (p == nullptr) {
     return -1;
   }
+
+  return 0;
 }
 
 int get_listener_socket() {
@@ -153,9 +156,10 @@ int main() {
                 get_client_address(remote_address, remote_ip), newfd);
           }
         } else {
+          // Data received from connection
           int nbytes = recv(pfd.fd, buffer.data(), sizeof buffer, 0);
-
           int sender_fd = pfd.fd;
+
 
           if (nbytes <= 0) {
             if (nbytes == 0) {
@@ -167,15 +171,24 @@ int main() {
             close(pfd.fd);
             pollfds.erase(pollfds.begin() + i);
           } else {
-            for (auto &pfd : pollfds) {
-              int dest_fd = pfd.fd;
+            std::string request = std::string(buffer.data(), nbytes);
+            std::cout << request << '\n';
 
-              if (dest_fd != listener && dest_fd != sender_fd) {
-                if (send(dest_fd, buffer.data(), nbytes, 0) == -1) {
-                  perror("send");
-                }
-              }
-            }
+            // Return the HTML of requested file
+
+
+            // Terminate connection
+            close(pfd.fd);
+
+            // for (auto &pfd : pollfds) {
+            //   int dest_fd = pfd.fd;
+
+            //   if (dest_fd != listener && dest_fd != sender_fd) {
+            //     if (send(dest_fd, buffer.data(), nbytes, 0) == -1) {
+            //       perror("send");
+            //     }
+            //   }
+            // }
           }
         }
       }
