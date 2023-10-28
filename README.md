@@ -19,6 +19,7 @@ HTML Standard Implemented:
 ## Usage
 
 ### Requirements
+
 * Linux (not tested on other platforms)
 * CMake 3.17 or better
 * A C++20 compatible compiler (g++)
@@ -39,6 +40,7 @@ cmake --build build
 ```
 
 ### Running the server
+
 To run server:
 
 ```bash
@@ -90,7 +92,6 @@ The reply from the server should be HTML marked up text from the requested file,
 ```html
 <html> This is an HTML file! </html>
 ```
-
 
 ## Disclaimer
 
