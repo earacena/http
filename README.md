@@ -8,7 +8,7 @@ I was interested in diving deeper into common web technologies and standards. Th
 
 ## Features
 
-* Server (using poll())
+* Server (using `poll()`)
 
 HTML Standard Implemented:
 
