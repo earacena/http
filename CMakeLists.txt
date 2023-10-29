@@ -15,5 +15,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
+# Add source code directory
+add_subdirectory(src)
+
 # Add executable directory
 add_subdirectory(apps)
+
