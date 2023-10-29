@@ -12,7 +12,7 @@ I was interested in diving deeper into common web technologies and standards. Th
 
 HTML Standard Implemented:
 
-* [ ] HTML/0.9
+* [x] HTML/0.9
 * [ ] HTML/1.0
 * [ ] HTML/1.1
 
