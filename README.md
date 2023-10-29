@@ -22,7 +22,7 @@ HTML Standard Implemented:
 
 * Linux (not tested on other platforms)
 * CMake 3.17 or better
-* A C++20 compatible compiler (g++)
+* A C++20 compatible compiler
 * telnet (for sending requests to HTML/0.9)
 
 ### Building
@@ -44,7 +44,7 @@ cmake --build build
 To run server:
 
 ```bash
-./build/http
+./build/apps/http
 ```
 
 ### Connecting to the server
@@ -58,7 +58,7 @@ cmake -S . -B build
   ... generated cmake output ...
 cmake --build build
   ... generated cmake output ...
-./build/http
+./build/apps/http
 ```
 
 Open another terminal window and connect using telnet:
@@ -74,7 +74,7 @@ Escape character is '^]'.
 Then type an HTML/0.9 compliant request. Since HTML/0.9 only supports GET, the request should follow the following format:
 
 ```text
-GET <HTML filename>
+GET /<HTML filename>
 ```
 
 Some examples:
