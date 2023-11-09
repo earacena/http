@@ -1,9 +1,5 @@
 #include "server.hpp"
 
-Server::Server(const int pport) {
-  port = pport;
-}
-
 int Server::initialize() {
   listener = get_listener_socket();
 
@@ -76,34 +72,16 @@ void Server::loop() {
             pollfds.erase(pollfds.begin() + i);
           } else {
             std::string request = std::string(buffer.data(), nbytes);
+            const std::string response = http_protocol->respond(request);
 
-            // Return the data of requested file
-            std::string method;
-            std::string resource_path;
-
-            std::stringstream sstream(request);
-            sstream >> method >> resource_path;
-
-
-            if (method == "GET") {
-              
-              // Find and serve requested file if it exists
-              
-              if (resource_path == "/") {
-                resource_path = "/index.html";
-              }
-
-              std::string file_data = fetch_file_contents(resource_path);
-              std::cout << std::format("[{}] {}", method, resource_path);
-              if (file_data != "") {
-                if (send(sender_fd, file_data.data(), file_data.size(), 0) == -1) {
+            if (response != "") {
+                if (send(sender_fd, response.data(), response.size(), 0) == -1) {
                   perror("send");
                 }
 
-                std::cout << std::format(" - found, {} byte response\n", file_data.size());
-              } else {
-                std::cout << std::format(" - not found, no response\n");
-              }
+                std::cout << std::format(" - found, {} byte response\n", response.size());
+            } else {
+                std::cout << std::format(" - no response\n");
             }
 
             // Terminate connection

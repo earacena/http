@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iterator>
 #include <algorithm>
+#include <memory>
 
 // C headers
 #include <cstdio>
@@ -25,16 +26,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+// Project headers
+#include "protocol.hpp"
+
 #define BUFFER_SIZE 256
 
 class Server {
  public:
-  Server(const int port);
+  Server(const int pport, std::unique_ptr<HttpProtocol> protocol) : http_protocol(std::move(protocol)), port(pport) {};
   int initialize();
   void loop();
 
  private:
   // Data members
+  std::unique_ptr<HttpProtocol> http_protocol;
+
   int port = 9999;                       // Port for server to listen on
   int listener;                          // Listening socket descriptor
   std::array<char, BUFFER_SIZE> buffer;  // Buffer for client data
